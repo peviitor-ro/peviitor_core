@@ -17,3 +17,15 @@ BFF API, UI, scrapers, and manual data validator will be considered as **plugins
 
 ## Key Benefits
 **Performance, reliability, recovery from disaster, scalability, and validity** are the most valuable benefits this project delivers.
+
+
+## Job Model Schema
+
+| Field      | Type   | Required | Description |
+|------------|--------|----------|-------------|
+| id         | string | Yes      | MD5 hash of `job_link` (ex: "a1b2c3d4e5f6..."). |
+| job_link   | string | Yes      | Full URL to the job detail page. |
+| job_title  | string | Yes      | Exact position title. |
+| company    | string | Yes      | Name of the hiring company. |
+| location   | string | No       | Location or detailed address. |
+
