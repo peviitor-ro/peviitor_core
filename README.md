@@ -29,3 +29,19 @@ BFF API, UI, scrapers, and manual data validator will be considered as **plugins
 | company    | string | Yes      | Name of the hiring company. Real name. Full name. not just a brand or a code. Legal name. |
 | location   | string | No       | Location or detailed address. |
 
+
+
+## Company Model Schema
+
+| Field     | Type   | Required | Description |
+|-----------|--------|----------|-------------|
+| id        | string | Yes      | CIF/CUI al firmei (ex: "12345678"). |
+| vat       | string | Yes      | CUI cu prefix RO dacă plătitor TVA (ex: "RO12345678"). |
+| name      | string | Yes      | Denumire exactă pentru job matching. |
+| address   | string | Yes      | Adresa sediului social completă. |
+| status    | string | Yes      | Stare: "activ", "suspendat", "inactiv", "radiat". |
+| county    | string | No       | Județ (ex: "Bucuresti", "Ilfov"). |
+| city      | string | No       | Localitate (ex: "Sector 1", "Pipera"). |
+| email     | string | No       | Email oficial firmă (ex: "hr@company.ro"). |
+| phone     | string | No       | Număr telefon firmă (ex: "0212345678", "+40721234567"). |
+
