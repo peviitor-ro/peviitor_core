@@ -26,6 +26,6 @@ BFF API, UI, scrapers, and manual data validator will be considered as **plugins
 | id         | string | Yes      | MD5 hash of `job_link` (ex: "a1b2c3d4e5f6..."). |
 | job_link   | string | Yes      | Full URL to the job detail page. |
 | job_title  | string | Yes      | Exact position title. |
-| company    | string | Yes      | Name of the hiring company. |
+| company    | string | Yes      | Name of the hiring company. Real name. Full name. not just a brand or a code. Legal name. |
 | location   | string | No       | Location or detailed address. |
 
