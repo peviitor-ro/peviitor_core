@@ -203,3 +203,16 @@ async function validateJobUrls(jobIds) {
 - Daily quota: 5000 validations/user
 
 
+## Technologies
+
+### Search & Indexing Engines
+
+| Technology | Status | Use Case | Notes |
+|------------|--------|----------|-------|
+| **Apache SOLR** | ✅ Primary | Production indexing, diacritics RO, complex schemas | Job/Company/Auth models, cron integration |
+| **OpenSearch** | ✅ Primary | SOLR alternative, AWS compatible | Same schema, managed hosting |
+| **Elasticsearch** | ⚠️ Secondary | Legacy compatibility | Existing peviitor scrapers |
+| **Typesense** | 🚀 MVP/Prototype | Ultra-fast UI search (<50ms) | Typo-tolerant, developer friendly |
+
+
+
