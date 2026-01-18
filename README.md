@@ -45,3 +45,11 @@ BFF API, UI, scrapers, and manual data validator will be considered as **plugins
 | email     | string | No       | Email oficial firmă (ex: "hr@company.ro"). |
 | phone     | string | No       | Număr telefon firmă (ex: "0212345678", "+40721234567"). |
 
+## Auth Model Schema
+
+| Field     | Type     | Required | Description |
+|-----------|----------|----------|-------------|
+| email     | string  | Yes      | MD5 hash al emailului (ex: "d41d8cd98f00b204e9800998ecf8427e"). |
+| token     | string  | No       | OTP token temporar (6 digits, ex: "123456"). |
+| companies | array   | No       | Array CIF-uri companii accesibile (ex: ["12345678", "87654321"]). |
+
