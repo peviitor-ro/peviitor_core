@@ -124,6 +124,7 @@ BFF API, UI, scrapers, and manual data validator will be considered as **plugins
 # crontab -e
 0 2 * * * /app/clean_expiration.sh           # Daily expiration @ 02:00
 0 6 * * * /app/validate_urls.sh             # DAILY URL check @ 06:00  
+```
 
 **Automatic via SOLR Settings** (no cron needed):
 
@@ -131,10 +132,9 @@ BFF API, UI, scrapers, and manual data validator will be considered as **plugins
 ```xml
 <uniqueKey>id</uniqueKey>
 <field name="id" type="string" indexed="true" stored="true" required="true" multiValued="false"/>
-
+```
 
 ### Resource Requirements
-```markdown
 **Daily URL Validator**:
 - CPU: 8 cores for parallel HEAD requests
 - Memory: 4GB 
