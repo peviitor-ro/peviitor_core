@@ -61,3 +61,43 @@ BFF API, UI, scrapers, and manual data validator will be considered as **plugins
 | token     | string  | No       | OTP token temporar (6 digits, ex: "123456"). |
 | companies | array   | No       | Array CIF-uri companii accesibile (ex: ["12345678", "87654321"]). |
 
+### Job Model Rules
+
+1. **id** must be exactly MD5(job_link) - 32 hex chars lowercase
+2. **job_link** must be valid HTTP/HTTPS URL, canonical job detail page
+3. **job_title** max 200 chars, no HTML, trimmed whitespace, **DIACRITICS ACCEPTED** (ăâîșțĂÂÎȘȚ)
+4. **company** must match exactly Company.name (case insensitive, **DIACRITICS PRESERVED**)
+5. **date** = UTC ISO8601 timestamp of scrape (ex: "2026-01-18T10:00:00Z")
+6. **validation** starts "scraped", progresses: scraped → tested → published → verified
+7. **vdate** set only when validation="verified"
+8. **expirationdate** = vdate + 30 days max, or extract from job page
+9. **salary** format: "MIN-MAX CURRENCY" or "negotiable CURRENCY"
+10. **tags** lowercase, max 20 entries, standardized values only, **NO DIACRITICS**
+11. **workmode** only: "remote", "on-site", "hybrid"
+12. **location** Romanian cities/addresses, **DIACRITICS ACCEPTED** (ex: "București", "Cluj-Napoca")
+
+
+### Company Model Rules
+
+1. **id** = exact CIF/CUI 8 digits (no RO prefix)
+2. **vat** = "RO" + id if TVA registered, else null
+3. **name** = legal name from Registrul Comerțului exact match, **DIACRITICS REQUIRED** (ex: "Tehnologia Informației")
+4. **address** Romanian format, **DIACRITICS ACCEPTED** (ex: "Str. Ștefan cel Mare")
+5. **status** only: "activ", "suspendat", "inactiv", "radiat"
+6. **county** Romanian județe, **DIACRITICS ACCEPTED** (ex: "București", "Ilfov")
+7. **city** Romanian localități, **DIACRITICS ACCEPTED**
+8. **phone** RO format: "02x..." or "+407xx..." (14 chars max)
+9. **email** valid format, domain MX record exists
+
+### Auth Model Rules
+
+1. **email** = MD5(email_lowercase) 32 hex chars
+2. **token** = 6 digits numeric OTP, expires 10min
+3. **companies** = array valid CIF from Company model only
+
+
+### SOLR/OpenSearch Note
+
+analyzer: "romanian" preserves diacritics ȘȚĂÂÎ
+search: "Bucuresti" matches "București" automatically
+
