@@ -101,3 +101,45 @@ BFF API, UI, scrapers, and manual data validator will be considered as **plugins
 * analyzer: "romanian" preserves diacritics ȘȚĂÂÎ
 * search: "Bucuresti" matches "București" automatically
 
+**Purpose**: Remove expired job listings automatically
+
+**Schedule**: Daily @ 02:00 AM EET
+**Logic**: 
+- DELETE jobs WHERE `expirationdate` < NOW() AND `validation`="verified"
+- SOLR/OpenSearch: `delete_by_query` range query on `expirationdate`
+
+**Purpose**: Validate job URLs are still active **DAILY**
+
+**Schedule**: Daily @ 06:00 AM EET  
+**Workflow**:
+1. SELECT jobs WHERE `validation`="verified" AND `date` > 1 day ago
+2. Parallel HTTP HEAD requests (max 1000 concurrent) to `job_link`
+3. **404** → DELETE job immediately
+4. **200 OK** → Parse content for "expirat"/"ocupat"/"închis"/"no longer available"/"filled"
+5. **Invalid content** → SET `validation`="tested", schedule recheck in 24h
+6. **Valid** → UPDATE `validation`="verified", `vdate`=NOW()
+**Max batch**: 50k jobs/day, prioritize newest first
+
+```yaml
+# crontab -e
+0 2 * * * /app/clean_expiration.sh           # Daily expiration @ 02:00
+0 6 * * * /app/validate_urls.sh             # DAILY URL check @ 06:00  
+
+**Automatic via SOLR Settings** (no cron needed):
+
+### SOLR schema.xml
+```xml
+<uniqueKey>id</uniqueKey>
+<field name="id" type="string" indexed="true" stored="true" required="true" multiValued="false"/>
+
+
+### Resource Requirements
+```markdown
+**Daily URL Validator**:
+- CPU: 8 cores for parallel HEAD requests
+- Memory: 4GB 
+- Timeout per URL: 5 seconds
+- Max concurrent: 1000 requests
+- Expected runtime: 1-2 hours for 50k jobs
+
+
