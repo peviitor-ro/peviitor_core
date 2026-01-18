@@ -143,3 +143,63 @@ BFF API, UI, scrapers, and manual data validator will be considered as **plugins
 - Expected runtime: 1-2 hours for 50k jobs
 
 
+**Purpose**: Real-time job URL validation from user browser
+
+**Trigger**: After search results render in UI
+**Scope**: Test all displayed job URLs (paginated results)
+
+**JavaScript Workflow**:
+```javascript
+async function validateJobUrls(jobIds) {
+  const invalidJobs = [];
+  
+  await Promise.all(jobIds.map(async (jobId) => {
+    const job = await fetchJobData(jobId); // from SOLR/ES
+    const response = await fetch(job.job_link, { method: 'HEAD' });
+    
+    if (!response.ok) {
+      invalidJobs.push(jobId);
+      return;
+    }
+    
+    // Parse content for invalid keywords
+    const content = await (await fetch(job.job_link)).text();
+    const invalidKeywords = ['expirat', 'ocupat', 'închis', 'no longer available', 'filled', 'nu mai este disponibil'];
+    
+    if (invalidKeywords.some(keyword => content.includes(keyword))) {
+      invalidJobs.push(jobId);
+    }
+  }));
+  
+  if (invalidJobs.length > 0) {
+    await deleteInvalidJobs(invalidJobs);
+  }
+}
+```
+
+
+### Delete Command API
+```markdown
+**Endpoint**: `DELETE /api/jobs/bulk`
+**Payload**:
+```json
+{
+  "job_ids": ["a1b2c3d4...", "e5f6g7h8..."],
+  "reason": "ui_validation_404|ui_validation_expired",
+  "user_auth_hash": "d41d8cd98f..."
+}
+```
+
+
+### Rate Limiting & Optimization
+**Client Limits**:
+- Max 20 concurrent HEAD requests
+- 2 second timeout per URL
+- Batch max 50 jobs per validation cycle
+- Throttle: 1 request/second per domain
+
+**Server Limits**:
+- Max 100 deletions/minute per `user_auth_hash`
+- Daily quota: 5000 validations/user
+
+
