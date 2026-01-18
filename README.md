@@ -98,6 +98,6 @@ BFF API, UI, scrapers, and manual data validator will be considered as **plugins
 
 ### SOLR/OpenSearch Note
 
-analyzer: "romanian" preserves diacritics ȘȚĂÂÎ
-search: "Bucuresti" matches "București" automatically
+* analyzer: "romanian" preserves diacritics ȘȚĂÂÎ
+* search: "Bucuresti" matches "București" automatically
 
