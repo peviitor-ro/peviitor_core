@@ -28,6 +28,8 @@ BFF API, UI, scrapers, and manual data validator will be considered as **plugins
 | job_title  | string | Yes      | Exact position title. |
 | company    | string | Yes      | Name of the hiring company. Real name. Full name. not just a brand or a code. Legal name. |
 | location   | string | No       | Location or detailed address. |
+| tags       | array  | No       | Tag-uri skills/educație/experiență. |
+| workmode   | string | No       | "remote", "on-site", "hybrid". |
 
 
 
