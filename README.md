@@ -21,15 +21,21 @@ BFF API, UI, scrapers, and manual data validator will be considered as **plugins
 
 ## Job Model Schema
 
-| Field      | Type   | Required | Description |
-|------------|--------|----------|-------------|
-| id         | string | Yes      | MD5 hash of `job_link` (ex: "a1b2c3d4e5f6..."). |
-| job_link   | string | Yes      | Full URL to the job detail page. |
-| job_title  | string | Yes      | Exact position title. |
-| company    | string | Yes      | Name of the hiring company. Real name. Full name. not just a brand or a code. Legal name. |
-| location   | string | No       | Location or detailed address. |
-| tags       | array  | No       | Tag-uri skills/educație/experiență. |
-| workmode   | string | No       | "remote", "on-site", "hybrid". |
+| Field          | Type   | Required | Description |
+|----------------|--------|----------|-------------|
+| id             | string | Yes      | MD5 hash of `job_link` (ex: "a1b2c3d4e5f6..."). |
+| job_link       | string | Yes      | Full URL to the job detail page. |
+| job_title      | string | Yes      | Exact position title. |
+| company        | string | Yes      | Name of the hiring company. Real name. Full name. not just a brand or a code. Legal name. |
+| location       | string | No       | Location or detailed address. |
+| tags           | array  | No       | Tag-uri skills/educație/experiență. |
+| workmode       | string | No       | "remote", "on-site", "hybrid". |
+| date           | date   | Yes      | Data scrape/indexare (ISO8601). |
+| validation     | string | Yes      | "scraped", "tested", "published", "verified". |
+| vdate          | date   | No       | Verified date (ISO8601). |
+| expirationdate | date   | No       | Data expirare estimată job. |
+| salary         | string | No       | Interval salarial + currency (ex: "5000-8000 RON", "4000 EUR"). |
+
 
 
 
