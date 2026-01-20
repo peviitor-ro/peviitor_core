@@ -31,7 +31,7 @@ BFF API, UI, scrapers, and manual data validator will be considered as **plugins
 | tags           | array  | No       | Tag-uri skills/educație/experiență. |
 | workmode       | string | No       | "remote", "on-site", "hybrid". |
 | date           | date   | Yes      | Data scrape/indexare (ISO8601). |
-| validation     | string | Yes      | "scraped", "tested", "published", "verified". |
+| status         | string | Yes      | "scraped", "tested", "published", "verified". |
 | vdate          | date   | No       | Verified date (ISO8601). |
 | expirationdate | date   | No       | Data expirare estimată job. |
 | salary         | string | No       | Interval salarial + currency (ex: "5000-8000 RON", "4000 EUR"). |
