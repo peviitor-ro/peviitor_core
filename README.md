@@ -48,7 +48,6 @@ BFF API, UI, scrapers, and manual data validator will be considered as **plugins
 | status    | string | Yes      | Stare: "activ", "suspendat", "inactiv", "radiat". |
 | location  | string | No       | Location or detailed address. |
 | email     | string | No       | MD5 hash al emailului (ex: "d41d8cd98f00b204e9800998ecf8427e")  |
-| phone     | string | No       | Număr telefon firmă (ex: "0212345678", "+40721234567"). |
 
 ## Auth Model Schema
 
