@@ -64,7 +64,7 @@ BFF API, UI, scrapers, and manual data validator will be considered as **plugins
 3. **title** max 200 chars, no HTML, trimmed whitespace, **DIACRITICS ACCEPTED** (ăâîșțĂÂÎȘȚ)
 4. **company** must match exactly Company.name (case insensitive, **DIACRITICS PRESERVED**)
 5. **date** = UTC ISO8601 timestamp of scrape (ex: "2026-01-18T10:00:00Z")
-6. **validation** starts "scraped", progresses: scraped → tested → published → verified
+6. **status** starts "scraped", progresses: scraped → tested → published → verified
 7. **vdate** set only when validation="verified"
 8. **expirationdate** = vdate + 30 days max, or extract from job page
 9. **salary** format: "MIN-MAX CURRENCY" or "negotiable CURRENCY"
