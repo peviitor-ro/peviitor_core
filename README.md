@@ -44,18 +44,18 @@ BFF API, UI, scrapers, and manual data validator will be considered as **plugins
 | Field     | Type   | Required | Description |
 |-----------|--------|----------|-------------|
 | id        | string | Yes      | CIF/CUI al firmei (ex: "12345678"). |
-| name      | string | Yes      | Denumire exactă pentru job matching. |
+| company   | string | Yes      | Denumire exactă pentru job matching. |
 | status    | string | Yes      | Stare: "activ", "suspendat", "inactiv", "radiat". |
 | location  | string | No       | Location or detailed address. |
-| email     | string | No       | Email oficial firmă (ex: "hr@company.ro"). |
+| email     | string | No       | MD5 hash al emailului (ex: "d41d8cd98f00b204e9800998ecf8427e")  |
 | phone     | string | No       | Număr telefon firmă (ex: "0212345678", "+40721234567"). |
 
 ## Auth Model Schema
 
 | Field     | Type     | Required | Description |
 |-----------|----------|----------|-------------|
-| email     | string  | Yes      | MD5 hash al emailului (ex: "d41d8cd98f00b204e9800998ecf8427e"). |
-| companies | array   | No       | Array CIF-uri companii accesibile (ex: ["12345678", "87654321"]). |
+| email     | string   | Yes      | MD5 hash al emailului (ex: "d41d8cd98f00b204e9800998ecf8427e"). Unique. Non-overwrite|
+| company   | array    | No       | Array CIF-uri companii accesibile (ex: ["12345678", "87654321"]). |
 
 ### Job Model Rules
 
@@ -72,6 +72,7 @@ BFF API, UI, scrapers, and manual data validator will be considered as **plugins
 11. **workmode** only: "remote", "on-site", "hybrid"
 12. **location** Romanian cities/addresses, **DIACRITICS ACCEPTED** (ex: "București", "Cluj-Napoca")
 13. if company status is not active, remove jobs
+14. email from company model have access to validator but only for the company associated with
 
 
 ### Company Model Rules
