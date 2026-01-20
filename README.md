@@ -71,6 +71,7 @@ BFF API, UI, scrapers, and manual data validator will be considered as **plugins
 10. **tags** lowercase, max 20 entries, standardized values only, **NO DIACRITICS**
 11. **workmode** only: "remote", "on-site", "hybrid"
 12. **location** Romanian cities/addresses, **DIACRITICS ACCEPTED** (ex: "București", "Cluj-Napoca")
+13. if company status is not active, remove jobs
 
 
 ### Company Model Rules
