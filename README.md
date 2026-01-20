@@ -79,12 +79,11 @@ BFF API, UI, scrapers, and manual data validator will be considered as **plugins
 
 1. **id** = exact CIF/CUI 8 digits (no RO prefix)
 2. **name** = legal name from Registrul Comerțului exact match, **DIACRITICS REQUIRED** (ex: "Tehnologia Informației")
-3. **address** Romanian format, **DIACRITICS ACCEPTED** (ex: "Str. Ștefan cel Mare")
-4. **status** only: "activ", "suspendat", "inactiv", "radiat"
-5. **location** Romanian cities/addresses, **DIACRITICS ACCEPTED** (ex: "București", "Cluj-Napoca")
-6. **phone** RO format: "02x..." or "+407xx..." (14 chars max)
-7. **email** MD5 of email to be stored
-8. email from company model have access to validator but only for the company associated with
+3. **status** only: "activ", "suspendat", "inactiv", "radiat"
+4. **location** Romanian cities/addresses, **DIACRITICS ACCEPTED** (ex: "București", "Cluj-Napoca")
+5. **phone** RO format: "02x..." or "+407xx..." (14 chars max)
+6. **email** MD5 of email to be stored
+7. email from company model have access to validator but only for the company associated with
 
 ### Auth Model Rules
 
