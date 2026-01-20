@@ -44,7 +44,6 @@ BFF API, UI, scrapers, and manual data validator will be considered as **plugins
 | Field     | Type   | Required | Description |
 |-----------|--------|----------|-------------|
 | id        | string | Yes      | CIF/CUI al firmei (ex: "12345678"). |
-| vat       | string | Yes      | CUI cu prefix RO dacă plătitor TVA (ex: "RO12345678"). |
 | name      | string | Yes      | Denumire exactă pentru job matching. |
 | address   | string | Yes      | Adresa sediului social completă. |
 | status    | string | Yes      | Stare: "activ", "suspendat", "inactiv", "radiat". |
