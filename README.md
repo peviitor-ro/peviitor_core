@@ -204,9 +204,7 @@ async function validateJobUrls(jobIds) {
 - Max 100 deletions/minute per `user_auth_hash`
 - Daily quota: 5000 validations/user
 
-## GDPR
-* We do not keep any personal data that are impacted by GDPR
-* email for authentication&authorization is a hash with MD5 that cannot be decrypted hence we don't know the original email used.
+
 
 ## Technologies
 
