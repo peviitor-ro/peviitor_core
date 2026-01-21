@@ -72,6 +72,7 @@ BFF API, UI, scrapers, and manual data validator will be considered as **plugins
 11. **workmode** only: "remote", "on-site", "hybrid"
 12. **location** Romanian cities/addresses, **DIACRITICS ACCEPTED** (ex: "București", "Cluj-Napoca")
 13. if company status is not active, remove jobs
+14. we do not store personal data in job model as we do not want to keep data related to GDPR
     
 
 
@@ -84,6 +85,7 @@ BFF API, UI, scrapers, and manual data validator will be considered as **plugins
 5. **phone** RO format: "02x..." or "+407xx..." (14 chars max)
 6. **email** MD5 of email to be stored
 7. email from company model have access to validator but only for the company associated with
+8. we do not store personal data in company model as we do not want to keep data related to GDPR
 
 ### Auth Model Rules
 
@@ -93,6 +95,7 @@ BFF API, UI, scrapers, and manual data validator will be considered as **plugins
 4. a superuser is able to...
 5. an admin is able to...
 6. a staff is able to...
+7. we do not store personal data in auth model as we do not want to keep data related to GDPR
 
 
 ### SOLR/OpenSearch Note
