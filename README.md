@@ -5,26 +5,6 @@ Here is the core of the peviitor project.
 Mostly, it's about **data** and the **quality of data**. But it's also about getting the data you are searching for using a full-text indexed search engine.
 Workflows, pipelines and code that is validating the rules, keeping the index up-to-date is also part of peviitor_core.
 
-## Plugins
-
-The following components are considered **plugins** for the peviitor core project:
-
-- BFF API — Backend-for-Frontend API layers that tailor data and endpoints for different clients.
-- UI — Web or mobile user interfaces and frontend components.
-- Scrapers — Automated data collectors that fetch and normalize job and company data.
-- Manual data validator — Tools or interfaces used by humans to validate and correct data.
-- Integrations — Connectors to external services (analytics, exporters, auth providers, etc.).
-
-## Project Scope
-- Security and procedures related to ways of working will be part of the project.
-- How to connect and how to use it will be captured in **documentation**.
-- All pull requests will be **documented**.
-- Project is **OPEN SOURCE**.
-- Each data and type of data will be **fully documented**.
-- peviitor core is not a closed project but an **extensible** one.
-
-## Key Benefits
-**Performance, reliability, recovery from disaster, scalability, and validity** are the most valuable benefits this project delivers.
 
 
 ## Job Model Schema
@@ -54,6 +34,40 @@ The following components are considered **plugins** for the peviitor core projec
 | company   | string | Yes      | Denumire exactă pentru job matching. **company** = legal name from Registrul Comerțului exact match, **DIACRITICS REQUIRED** (ex: "Tehnologia Informației")|
 | status    | string | No       | Stare: "activ", "suspendat", "inactiv", "radiat". if company status is not active, remove jobs; remove also company. **status** only: "activ", "suspendat", "inactiv",[...]
 | location  | string | No       | Location or detailed address. **location** Romanian cities/addresses, **DIACRITICS ACCEPTED** (ex: "București", "Cluj-Napoca")|
+
+## Technologies
+
+### Search & Indexing Engines
+
+| Technology | Status | Use Case | Notes |
+|------------|--------|----------|-------|
+| **Apache SOLR** | ✅ Primary | Production indexing, diacritics RO, complex schemas | Job/Company/Auth models, cron integration |
+| **OpenSearch** | ✅ Primary | SOLR alternative, AWS compatible | Same schema, managed hosting |
+| **Elasticsearch** | ⚠️ Secondary | Legacy compatibility | Existing peviitor scrapers |
+| **Typesense** | 🚀 MVP/Prototype | Ultra-fast UI search (<50ms) | Typo-tolerant, developer friendly |
+
+
+## Plugins
+
+The following components are considered **plugins** for the peviitor core project:
+
+- BFF API — Backend-for-Frontend API layers that tailor data and endpoints for different clients.
+- UI — Web or mobile user interfaces and frontend components.
+- Scrapers — Automated data collectors that fetch and normalize job and company data.
+- Manual data validator — Tools or interfaces used by humans to validate and correct data.
+- Integrations — Connectors to external services (analytics, exporters, auth providers, etc.).
+
+## Key Benefits
+**Performance, reliability, recovery from disaster, scalability, and validity** are the most valuable benefits this project delivers.
+
+
+## Notes
+- Project is **OPEN SOURCE**.
+- Security and procedures related to ways of working will be part of the project.
+- How to connect and how to use it will be captured in **documentation**.
+- All pull requests will be **documented**.
+- peviitor core is not a closed project but an **extensible** one.
+
 
 
 
@@ -163,16 +177,3 @@ async function validateJobUrls(jobIds) {
 **Server Limits**:
 - Max 100 deletions/minute per `user_auth_hash`
 - Daily quota: 5000 validations/user
-
-
-
-## Technologies
-
-### Search & Indexing Engines
-
-| Technology | Status | Use Case | Notes |
-|------------|--------|----------|-------|
-| **Apache SOLR** | ✅ Primary | Production indexing, diacritics RO, complex schemas | Job/Company/Auth models, cron integration |
-| **OpenSearch** | ✅ Primary | SOLR alternative, AWS compatible | Same schema, managed hosting |
-| **Elasticsearch** | ⚠️ Secondary | Legacy compatibility | Existing peviitor scrapers |
-| **Typesense** | 🚀 MVP/Prototype | Ultra-fast UI search (<50ms) | Typo-tolerant, developer friendly |
