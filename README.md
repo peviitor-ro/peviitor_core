@@ -3,6 +3,7 @@
 Here is the core of the peviitor project.
 
 Mostly, it's about **data** and the **quality of data**. But it's also about getting the data you are searching for using a full-text indexed search engine.
+Workflows, pipelines and code that is validating the rules, keeping the index up-to-date is also part of peviitor_core.
 
 ## Plugins
 BFF API, UI, scrapers, and manual data validator will be considered as **plugins** for the peviitor core project.
