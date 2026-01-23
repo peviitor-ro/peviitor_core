@@ -6,7 +6,14 @@ Mostly, it's about **data** and the **quality of data**. But it's also about get
 Workflows, pipelines and code that is validating the rules, keeping the index up-to-date is also part of peviitor_core.
 
 ## Plugins
-BFF API, UI, scrapers, and manual data validator will be considered as **plugins** for the peviitor core project.
+
+The following components are considered **plugins** for the peviitor core project:
+
+- BFF API — Backend-for-Frontend API layers that tailor data and endpoints for different clients.
+- UI — Web or mobile user interfaces and frontend components.
+- Scrapers — Automated data collectors that fetch and normalize job and company data.
+- Manual data validator — Tools or interfaces used by humans to validate and correct data.
+- Integrations — Connectors to external services (analytics, exporters, auth providers, etc.).
 
 ## Project Scope
 - Security and procedures related to ways of working will be part of the project.
@@ -26,7 +33,7 @@ BFF API, UI, scrapers, and manual data validator will be considered as **plugins
 |----------------|--------|----------|-------------|
 | url            | string | Yes      | Full URL to the job detail page. unique. **url** must be valid HTTP/HTTPS URL, canonical job detail page|
 | title          | string | Yes      | Exact position title. **title** max 200 chars, no HTML, trimmed whitespace, **DIACRITICS ACCEPTED** (ăâîșțĂÂÎȘȚ)|
-| company        | string | No       | Name of the hiring company. Real name. Full name. not just a brand or a code. Legal name.  **company** must match exactly Company.name (case insensitive, **DIACRITICS PRESERVED**) if company status is not active, remove jobs|
+| company        | string | No       | Name of the hiring company. Real name. Full name. not just a brand or a code. Legal name.  **company** must match exactly Company.name (case insensitive, **DIACR[...]
 | location       | string | No       | Location or detailed address.  **location** Romanian cities/addresses, **DIACRITICS ACCEPTED** (ex: "București", "Cluj-Napoca")|
 | tags           | array  | No       | Tag-uri skills/educație/experiență. **tags** lowercase, max 20 entries, standardized values only, **NO DIACRITICS**|
 | workmode       | string | No       | "remote", "on-site", "hybrid".  **workmode** only: "remote", "on-site", "hybrid"|
@@ -45,7 +52,7 @@ BFF API, UI, scrapers, and manual data validator will be considered as **plugins
 |-----------|--------|----------|-------------|
 | id        | string | Yes      | CIF/CUI al firmei (ex: "12345678"). **id** = exact CIF/CUI 8 digits (no RO prefix)|
 | company   | string | Yes      | Denumire exactă pentru job matching. **company** = legal name from Registrul Comerțului exact match, **DIACRITICS REQUIRED** (ex: "Tehnologia Informației")|
-| status    | string | No       | Stare: "activ", "suspendat", "inactiv", "radiat". if company status is not active, remove jobs; remove also company. **status** only: "activ", "suspendat", "inactiv", "radiat"|
+| status    | string | No       | Stare: "activ", "suspendat", "inactiv", "radiat". if company status is not active, remove jobs; remove also company. **status** only: "activ", "suspendat", "inactiv",[...]
 | location  | string | No       | Location or detailed address. **location** Romanian cities/addresses, **DIACRITICS ACCEPTED** (ex: "București", "Cluj-Napoca")|
 
 
@@ -169,6 +176,3 @@ async function validateJobUrls(jobIds) {
 | **OpenSearch** | ✅ Primary | SOLR alternative, AWS compatible | Same schema, managed hosting |
 | **Elasticsearch** | ⚠️ Secondary | Legacy compatibility | Existing peviitor scrapers |
 | **Typesense** | 🚀 MVP/Prototype | Ultra-fast UI search (<50ms) | Typo-tolerant, developer friendly |
-
-
-
