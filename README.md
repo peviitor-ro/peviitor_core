@@ -25,12 +25,12 @@ BFF API, UI, scrapers, and manual data validator will be considered as **plugins
 |----------------|--------|----------|-------------|
 | url            | string | Yes      | Full URL to the job detail page. unique|
 | title          | string | Yes      | Exact position title. |
-| company        | string | Yes      | Name of the hiring company. Real name. Full name. not just a brand or a code. Legal name. |
+| company        | string | No       | Name of the hiring company. Real name. Full name. not just a brand or a code. Legal name. |
 | location       | string | No       | Location or detailed address. |
 | tags           | array  | No       | Tag-uri skills/educație/experiență. |
 | workmode       | string | No       | "remote", "on-site", "hybrid". |
-| date           | date   | Yes      | Data scrape/indexare (ISO8601). |
-| status         | string | Yes      | "scraped", "tested", "published", "verified". |
+| date           | date   | No       | Data scrape/indexare (ISO8601). |
+| status         | string | No       | "scraped", "tested", "published", "verified". |
 | vdate          | date   | No       | Verified date (ISO8601). |
 | expirationdate | date   | No       | Data expirare estimată job. |
 | salary         | string | No       | Interval salarial + currency (ex: "5000-8000 RON", "4000 EUR"). |
@@ -44,7 +44,7 @@ BFF API, UI, scrapers, and manual data validator will be considered as **plugins
 |-----------|--------|----------|-------------|
 | id        | string | Yes      | CIF/CUI al firmei (ex: "12345678"). |
 | company   | string | Yes      | Denumire exactă pentru job matching. |
-| status    | string | Yes      | Stare: "activ", "suspendat", "inactiv", "radiat". |
+| status    | string | No       | Stare: "activ", "suspendat", "inactiv", "radiat". |
 | location  | string | No       | Location or detailed address. |
 | email     | string | No       | MD5 hash al emailului (ex: "d41d8cd98f00b204e9800998ecf8427e")  |
 
