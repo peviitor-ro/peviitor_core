@@ -49,13 +49,7 @@ BFF API, UI, scrapers, and manual data validator will be considered as **plugins
 | location  | string | No       | Location or detailed address. |
 | email     | string | No       | MD5 hash al emailului (ex: "d41d8cd98f00b204e9800998ecf8427e")  |
 
-## Auth Model Schema
 
-| Field     | Type     | Required | Description |
-|-----------|----------|----------|-------------|
-| email     | string   | Yes      | MD5 hash al emailului (ex: "d41d8cd98f00b204e9800998ecf8427e"). Unique. Non-overwrite|
-| company   | array    | No       | Array CIF-uri companii accesibile (ex: ["12345678", "87654321"]). |
-| role      | string   | Yes      | "user" by default, "superuser", "staff", "admin" | 
 
 ### Job Model Rules
 
@@ -87,15 +81,6 @@ BFF API, UI, scrapers, and manual data validator will be considered as **plugins
 7. email from company model have access to validator but only for the company associated with
 8. we do not store personal data in company model as we do not want to keep data related to GDPR
 
-### Auth Model Rules
-
-1. **email** = MD5(email_lowercase) 32 hex chars
-2. **company** = array valid CIF from Company model only
-3. a user is able to...
-4. a superuser is able to...
-5. an admin is able to...
-6. a staff is able to...
-7. we do not store personal data in auth model as we do not want to keep data related to GDPR
 
 
 ### SOLR/OpenSearch Note
