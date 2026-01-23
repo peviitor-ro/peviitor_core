@@ -18,8 +18,8 @@ curl -s -X POST "%SOLR_URL%/schema" ^
 
 REM company
 curl -s -X POST "%SOLR_URL%/schema" ^
-  -H "Content-Type: application/json" ^
-  -d "{\"add-field\":{\"name\":\"company\",\"type\":\"text_general\",\"stored\":true,\"indexed\":true}}"
+ -H "Content-Type: application/json" ^
+ -d "{\"add-field\":{\"name\":\"company\",\"type\":\"string\",\"stored\":true,\"indexed\":true}}"
 
 REM cif
 curl -s -X POST "%SOLR_URL%/schema" ^
