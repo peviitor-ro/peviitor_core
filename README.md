@@ -21,19 +21,19 @@ BFF API, UI, scrapers, and manual data validator will be considered as **plugins
 
 ## Job Model Schema
 
-| Field          | Type   | Required | Description |
+| Field          | Type   | Required | Description and rules |
 |----------------|--------|----------|-------------|
-| url            | string | Yes      | Full URL to the job detail page. unique|
-| title          | string | Yes      | Exact position title. |
-| company        | string | No       | Name of the hiring company. Real name. Full name. not just a brand or a code. Legal name. |
-| location       | string | No       | Location or detailed address. |
-| tags           | array  | No       | Tag-uri skills/educație/experiență. |
-| workmode       | string | No       | "remote", "on-site", "hybrid". |
-| date           | date   | No       | Data scrape/indexare (ISO8601). |
-| status         | string | No       | "scraped", "tested", "published", "verified". |
-| vdate          | date   | No       | Verified date (ISO8601). |
-| expirationdate | date   | No       | Data expirare estimată job. |
-| salary         | string | No       | Interval salarial + currency (ex: "5000-8000 RON", "4000 EUR"). |
+| url            | string | Yes      | Full URL to the job detail page. unique. **url** must be valid HTTP/HTTPS URL, canonical job detail page|
+| title          | string | Yes      | Exact position title. **title** max 200 chars, no HTML, trimmed whitespace, **DIACRITICS ACCEPTED** (ăâîșțĂÂÎȘȚ)|
+| company        | string | No       | Name of the hiring company. Real name. Full name. not just a brand or a code. Legal name.  **company** must match exactly Company.name (case insensitive, **DIACRITICS PRESERVED**) if company status is not active, remove jobs|
+| location       | string | No       | Location or detailed address.  **location** Romanian cities/addresses, **DIACRITICS ACCEPTED** (ex: "București", "Cluj-Napoca")|
+| tags           | array  | No       | Tag-uri skills/educație/experiență. **tags** lowercase, max 20 entries, standardized values only, **NO DIACRITICS**|
+| workmode       | string | No       | "remote", "on-site", "hybrid".  **workmode** only: "remote", "on-site", "hybrid"|
+| date           | date   | No       | Data scrape/indexare (ISO8601). **date** = UTC ISO8601 timestamp of scrape (ex: "2026-01-18T10:00:00Z")|
+| status         | string | No       | "scraped", "tested", "published", "verified". **status** starts "scraped", progresses: scraped → tested → published → verified|
+| vdate          | date   | No       | Verified date (ISO8601). **vdate** set only when validation="verified"|
+| expirationdate | date   | No       | Data expirare estimată job.  **expirationdate** = vdate + 30 days max, or extract from job page|
+| salary         | string | No       | Interval salarial + currency (ex: "5000-8000 RON", "4000 EUR"). **salary** format: "MIN-MAX CURRENCY" or "negotiable CURRENCY"|
 
 
 
@@ -44,28 +44,13 @@ BFF API, UI, scrapers, and manual data validator will be considered as **plugins
 |-----------|--------|----------|-------------|
 | id        | string | Yes      | CIF/CUI al firmei (ex: "12345678"). |
 | company   | string | Yes      | Denumire exactă pentru job matching. |
-| status    | string | No       | Stare: "activ", "suspendat", "inactiv", "radiat". |
+| status    | string | No       | Stare: "activ", "suspendat", "inactiv", "radiat". if company status is not active, remove jobs; remove also company|
 | location  | string | No       | Location or detailed address. |
 | email     | string | No       | MD5 hash al emailului (ex: "d41d8cd98f00b204e9800998ecf8427e")  |
 
 
 
-### Job Model Rules
 
-1. **id** must be exactly MD5(job_link) - 32 hex chars lowercase
-2. **url** must be valid HTTP/HTTPS URL, canonical job detail page
-3. **title** max 200 chars, no HTML, trimmed whitespace, **DIACRITICS ACCEPTED** (ăâîșțĂÂÎȘȚ)
-4. **company** must match exactly Company.name (case insensitive, **DIACRITICS PRESERVED**)
-5. **date** = UTC ISO8601 timestamp of scrape (ex: "2026-01-18T10:00:00Z")
-6. **status** starts "scraped", progresses: scraped → tested → published → verified
-7. **vdate** set only when validation="verified"
-8. **expirationdate** = vdate + 30 days max, or extract from job page
-9. **salary** format: "MIN-MAX CURRENCY" or "negotiable CURRENCY"
-10. **tags** lowercase, max 20 entries, standardized values only, **NO DIACRITICS**
-11. **workmode** only: "remote", "on-site", "hybrid"
-12. **location** Romanian cities/addresses, **DIACRITICS ACCEPTED** (ex: "București", "Cluj-Napoca")
-13. if company status is not active, remove jobs
-14. we do not store personal data in job model as we do not want to keep data related to GDPR
     
 
 
