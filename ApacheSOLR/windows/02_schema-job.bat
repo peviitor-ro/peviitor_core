@@ -97,6 +97,10 @@ curl -s -X POST "%SOLR_URL%/schema" ^
   -H "Content-Type: application/json" ^
   -d "{\"add-copy-field\":{\"source\":\"salary\",\"dest\":\"_text_\"}}"
 
+curl -s -X POST "%SOLR_URL%/schema" ^
+ -H "Content-Type: application/json" ^
+ --data-binary "{""delete-field"":{""name"":""id""}}"
+
 echo.
 echo === DONE ===
 endlocal
