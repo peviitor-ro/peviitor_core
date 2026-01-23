@@ -42,28 +42,11 @@ BFF API, UI, scrapers, and manual data validator will be considered as **plugins
 
 | Field     | Type   | Required | Description |
 |-----------|--------|----------|-------------|
-| id        | string | Yes      | CIF/CUI al firmei (ex: "12345678"). |
-| company   | string | Yes      | Denumire exactă pentru job matching. |
-| status    | string | No       | Stare: "activ", "suspendat", "inactiv", "radiat". if company status is not active, remove jobs; remove also company|
-| location  | string | No       | Location or detailed address. |
-| email     | string | No       | MD5 hash al emailului (ex: "d41d8cd98f00b204e9800998ecf8427e")  |
+| id        | string | Yes      | CIF/CUI al firmei (ex: "12345678"). **id** = exact CIF/CUI 8 digits (no RO prefix)|
+| company   | string | Yes      | Denumire exactă pentru job matching. **company** = legal name from Registrul Comerțului exact match, **DIACRITICS REQUIRED** (ex: "Tehnologia Informației")|
+| status    | string | No       | Stare: "activ", "suspendat", "inactiv", "radiat". if company status is not active, remove jobs; remove also company. **status** only: "activ", "suspendat", "inactiv", "radiat"|
+| location  | string | No       | Location or detailed address. **location** Romanian cities/addresses, **DIACRITICS ACCEPTED** (ex: "București", "Cluj-Napoca")|
 
-
-
-
-    
-
-
-### Company Model Rules
-
-1. **id** = exact CIF/CUI 8 digits (no RO prefix)
-2. **name** = legal name from Registrul Comerțului exact match, **DIACRITICS REQUIRED** (ex: "Tehnologia Informației")
-3. **status** only: "activ", "suspendat", "inactiv", "radiat"
-4. **location** Romanian cities/addresses, **DIACRITICS ACCEPTED** (ex: "București", "Cluj-Napoca")
-5. **phone** RO format: "02x..." or "+407xx..." (14 chars max)
-6. **email** MD5 of email to be stored
-7. email from company model have access to validator but only for the company associated with
-8. we do not store personal data in company model as we do not want to keep data related to GDPR
 
 
 
