@@ -100,20 +100,6 @@ The following components are considered **plugins** for the peviitor core projec
 6. **Valid** → UPDATE `validation`="verified", `vdate`=NOW()
 **Max batch**: 50k jobs/day, prioritize newest first
 
-```yaml
-# crontab -e
-0 2 * * * /app/clean_expiration.sh           # Daily expiration @ 02:00
-0 6 * * * /app/validate_urls.sh             # DAILY URL check @ 06:00  
-```
-
-**Automatic via SOLR Settings** (no cron needed):
-
-### SOLR schema.xml
-```xml
-<uniqueKey>id</uniqueKey>
-<field name="id" type="string" indexed="true" stored="true" required="true" multiValued="false"/>
-```
-
 ### Resource Requirements
 **Daily URL Validator**:
 - CPU: 8 cores for parallel HEAD requests
@@ -158,26 +144,6 @@ async function validateJobUrls(jobIds) {
 ```
 
 
-### Delete Command API
-```markdown
-**Endpoint**: `DELETE /api/jobs/bulk`
-**Payload**:
-```json
-{
-  "job_ids": ["a1b2c3d4...", "e5f6g7h8..."],
-  "reason": "ui_validation_404|ui_validation_expired",
-  "user_auth_hash": "d41d8cd98f..."
-}
-```
 
 
-### Rate Limiting & Optimization
-**Client Limits**:
-- Max 20 concurrent HEAD requests
-- 2 second timeout per URL
-- Batch max 50 jobs per validation cycle
-- Throttle: 1 request/second per domain
 
-**Server Limits**:
-- Max 100 deletions/minute per `user_auth_hash`
-- Daily quota: 5000 validations/user
