@@ -31,10 +31,12 @@ Workflows, pipelines and code that is validating the rules, keeping the index up
 
 | Field     | Type   | Required | Description |
 |-----------|--------|----------|-------------|
-| id        | string | Yes      | CIF/CUI al firmei (ex: "12345678"). **id** = exact CIF/CUI 8 digits (no RO prefix)|
-| company   | string | Yes      | Denumire exactă pentru job matching. **company** = legal name from Registrul Comerțului exact match, **DIACRITICS REQUIRED** (ex: "Tehnologia Informației")|
-| status    | string | No       | Stare: "activ", "suspendat", "inactiv", "radiat". if company status is not active, remove jobs; remove also company. **status** only: "activ", "suspendat", "inactiv",[...]
-| location  | string | No       | Location or detailed address. **location** Romanian cities/addresses, **DIACRITICS ACCEPTED** (ex: "București", "Cluj-Napoca")|
+| id        | string | Yes      | CIF/CUI of the company (e.g. "12345678"). **id** = exact CIF/CUI 8 digits (no RO prefix). |
+| company   | string | Yes      | Exact name for job matching. **company** = legal name from Trade Register, **DIACRITICS REQUIRED** (e.g. "Tehnologia Informației"). |
+| status    | string | No       | Status: "activ", "suspendat", "inactiv", "radiat". If company status is not active, remove jobs; also remove company. **status** only: "activ", "suspendat", "inactiv", "radiat". |
+| location  | string | No       | Location or detailed address. **location** Romanian cities/addresses, **DIACRITICS ACCEPTED** (e.g. "București", "Cluj-Napoca"). |
+| website   | string | No       | Official company website. **website** must be a valid HTTP/HTTPS URL, preferably canonical, without trailing slash (e.g. "https://www.example.ro"). |
+
 
 ## Technologies
 
