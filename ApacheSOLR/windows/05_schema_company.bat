@@ -44,6 +44,12 @@ curl -s -X POST "%SOLR_URL%/schema" ^
  -H "Content-Type: application/json" ^
  -d "{\"add-copy-field\":{\"source\":\"website\",\"dest\":\"_text_\"}}"
 
+REM career
+curl -s -X POST "%SOLR_URL%/schema" ^
+ -H "Content-Type: application/json" ^
+ -d "{\"add-field\":{\"name\":\"career\",\"type\":\"string\",\"stored\":true,\"indexed\":true}}"
+
+
 echo.
 echo === DONE ===
 endlocal
