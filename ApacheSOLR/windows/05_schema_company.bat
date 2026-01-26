@@ -39,15 +39,16 @@ curl -s -X POST "%SOLR_URL%/schema" ^
  -H "Content-Type: application/json" ^
  -d "{\"add-copy-field\":{\"source\":\"location\",\"dest\":\"_text_\"}}"
 
-REM website -> _text_
+REM website
 curl -s -X POST "%SOLR_URL%/schema" ^
  -H "Content-Type: application/json" ^
- -d "{\"add-copy-field\":{\"source\":\"website\",\"dest\":\"_text_\"}}"
+ -d "{ \"add-field\": { \"name\":\"website\",\"type\":\"string\",\"stored\":true,\"indexed\":true,\"multiValued\":true}}"
 
 REM career
 curl -s -X POST "%SOLR_URL%/schema" ^
  -H "Content-Type: application/json" ^
- -d "{\"add-field\":{\"name\":\"career\",\"type\":\"string\",\"stored\":true,\"indexed\":true}}"
+ -d "{ \"add-field\": { \"name\":\"career\",\"type\":\"string\",\"stored\":true,\"indexed\":true,\"multiValued\":true}}"
+
 
 
 echo.
