@@ -21,10 +21,15 @@ curl -s -X POST "%SOLR_URL%/schema" ^
  -H "Content-Type: application/json" ^
  -d "{\"add-field\":{\"name\":\"location\",\"type\":\"text_general\",\"stored\":true,\"indexed\":true}}"
 
-REM website
+REM website (multivalued)
 curl -s -X POST "%SOLR_URL%/schema" ^
  -H "Content-Type: application/json" ^
- -d "{\"add-field\":{\"name\":\"website\",\"type\":\"string\",\"stored\":true,\"indexed\":true}}"
+ -d "{\"add-field\":{\"name\":\"website\",\"type\":\"string\",\"stored\":true,\"indexed\":true,\"multiValued\":true}}"
+
+REM career (multivalued)
+curl -s -X POST "%SOLR_URL%/schema" ^
+ -H "Content-Type: application/json" ^
+ -d "{\"add-field\":{\"name\":\"career\",\"type\":\"string\",\"stored\":true,\"indexed\":true,\"multiValued\":true}}"
 
 echo.
 echo === Add copyFields into _text_ ===
@@ -39,17 +44,10 @@ curl -s -X POST "%SOLR_URL%/schema" ^
  -H "Content-Type: application/json" ^
  -d "{\"add-copy-field\":{\"source\":\"location\",\"dest\":\"_text_\"}}"
 
-REM website
+REM website -> _text_
 curl -s -X POST "%SOLR_URL%/schema" ^
  -H "Content-Type: application/json" ^
- -d "{ \"add-field\": { \"name\":\"website\",\"type\":\"string\",\"stored\":true,\"indexed\":true,\"multiValued\":true}}"
-
-REM career
-curl -s -X POST "%SOLR_URL%/schema" ^
- -H "Content-Type: application/json" ^
- -d "{ \"add-field\": { \"name\":\"career\",\"type\":\"string\",\"stored\":true,\"indexed\":true,\"multiValued\":true}}"
-
-
+ -d "{\"add-copy-field\":{\"source\":\"website\",\"dest\":\"_text_\"}}"
 
 echo.
 echo === DONE ===
