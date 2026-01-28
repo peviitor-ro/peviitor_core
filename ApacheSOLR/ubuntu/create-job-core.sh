@@ -1,1 +1,2 @@
-docker stop peviitor-solr && docker rm peviitor-solr && sudo rm -rf ~/peviitor/solr/job && docker run -d --name peviitor-solr -p 8983:8983 -v ~/peviitor/solr:/var/solr solr:latest && sleep 15 && docker exec peviitor-solr /opt/solr/bin/solr create_core -c job
+sudo docker exec peviitor-solr bin/solr delete -c job
+sudo docker exec -it peviitor-solr bin/solr create_core -c job
