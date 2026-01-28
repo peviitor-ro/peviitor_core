@@ -1,175 +1,42 @@
-#!/bin/bash
+#!/usr/bin/env bash
 set -e
 
-CORE=job
-SOLR_URL="http://localhost:8983/solr/$CORE"
+CONTAINER=peviitor-solr
+SCHEMA_PATH=/var/solr/data/job/conf/managed-schema.xml
 
-echo "=== Add fields to $CORE ==="
+echo "[1] Setam <uniqueKey>url</uniqueKey> in schema..."
 
-# url - future primary key (like id)
-curl -s -X POST "$SOLR_URL/schema" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "add-field": {
-      "name": "url",
-      "type": "string",
-      "stored": true,
-      "indexed": true,
-      "required": true,
-      "multiValued": false,
-      "docValues": true
-    }
-  }'
+docker exec "$CONTAINER" bash -c "
+  set -e
 
-# title
-curl -s -X POST "$SOLR_URL/schema" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "add-field": {
-      "name": "title",
-      "type": "text_general",
-      "stored": true,
-      "indexed": true,
-      "multiValued": false
-    }
-  }'
+  # Daca avem vechiul uniqueKey=id, il inlocuim cu url
+  if grep -q '<uniqueKey>id</uniqueKey>' '$SCHEMA_PATH'; then
+    sed -i 's#<uniqueKey>id</uniqueKey>#<uniqueKey>url</uniqueKey>#' '$SCHEMA_PATH'
+  fi
 
-# company
-curl -s -X POST "$SOLR_URL/schema" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "add-field": {
-      "name": "company",
-      "type": "string",
-      "stored": true,
-      "indexed": true
-    }
-  }'
+  # Ne asiguram ca uniqueKey e in interiorul <schema> si apare o singura data
+  # 1) stergem orice <uniqueKey>url</uniqueKey> din primele 20 de linii (in caz ca e aiurea)
+  sed -i '1,20{/<uniqueKey>url<\/uniqueKey>/d}' '$SCHEMA_PATH'
 
-# cif
-curl -s -X POST "$SOLR_URL/schema" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "add-field": {
-      "name": "cif",
-      "type": "string",
-      "stored": true,
-      "indexed": true
-    }
-  }'
+  # 2) daca nu exista deloc uniqueKey=url, il inseram dupa <schema ...>
+  if ! grep -q '<uniqueKey>url</uniqueKey>' '$SCHEMA_PATH'; then
+    sed -i '/<schema name=\"default-config\" version=\"1.7\">/a \  <uniqueKey>url</uniqueKey>' '$SCHEMA_PATH'
+  fi
 
-# location
-curl -s -X POST "$SOLR_URL/schema" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "add-field": {
-      "name": "location",
-      "type": "text_general",
-      "stored": true,
-      "indexed": true
-    }
-  }'
+  echo '[OK] uniqueKey= url setat in schema.'
 
-# workmode
-curl -s -X POST "$SOLR_URL/schema" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "add-field": {
-      "name": "workmode",
-      "type": "string",
-      "stored": true,
-      "indexed": true
-    }
-  }'
+  echo '[2] Verificam/cream field-ul url...'
 
-# status
-curl -s -X POST "$SOLR_URL/schema" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "add-field": {
-      "name": "status",
-      "type": "string",
-      "stored": true,
-      "indexed": true
-    }
-  }'
+  # Daca field-ul url nu exista, il inseram dupa field-ul id
+  if ! grep -q 'name=\"url\"' '$SCHEMA_PATH'; then
+    sed -i '/name=\"id\"/a \  <field name=\"url\" type=\"string\" indexed=\"true\" stored=\"true\" required=\"true\" multiValued=\"false\"\/>' '$SCHEMA_PATH'
+    echo '[OK] Field url adaugat in schema.'
+  else
+    echo '[OK] Field url deja exista in schema.'
+  fi
+"
 
-# salary
-curl -s -X POST "$SOLR_URL/schema" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "add-field": {
-      "name": "salary",
-      "type": "text_general",
-      "stored": true,
-      "indexed": true
-    }
-  }'
+echo "[3] Restartam containerul Solr..."
+docker restart "$CONTAINER"
 
-# date
-curl -s -X POST "$SOLR_URL/schema" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "add-field": {
-      "name": "date",
-      "type": "pdate",
-      "stored": true,
-      "indexed": true
-    }
-  }'
-
-# vdate
-curl -s -X POST "$SOLR_URL/schema" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "add-field": {
-      "name": "vdate",
-      "type": "pdate",
-      "stored": true,
-      "indexed": true
-    }
-  }'
-
-# expirationdate
-curl -s -X POST "$SOLR_URL/schema" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "add-field": {
-      "name": "expirationdate",
-      "type": "pdate",
-      "stored": true,
-      "indexed": true
-    }
-  }'
-
-# tags (multiValued)
-curl -s -X POST "$SOLR_URL/schema" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "add-field": {
-      "name": "tags",
-      "type": "text_general",
-      "stored": true,
-      "indexed": true,
-      "multiValued": true
-    }
-  }'
-
-echo ""
-echo "=== Add copyFields into _text_ ==="
-
-for src in url title company location tags workmode salary; do
-  curl -s -X POST "$SOLR_URL/schema" \
-    -H "Content-Type: application/json" \
-    -d "{
-      \"add-copy-field\": {
-        \"source\": \"${src}\",
-        \"dest\": \"_text_\"
-      }
-    }"
-done
-
-echo ""
-echo "=== DONE ==="
-echo "Now check: http://localhost:8983/solr/#/$CORE/schema"
-echo "You should see url + all fields. id still exists for now."
+echo "[DONE] uniqueKey este acum url pentru core-ul job."
