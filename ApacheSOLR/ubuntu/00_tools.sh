@@ -1,49 +1,42 @@
 #!/bin/bash
+set -e  # Oprește la eroare
 
-# Minimal Docker + Solr setup on Ubuntu/WSL (always uses sudo)
+echo "=== Verifică și instalează Docker idempotent ==="
 
-set -e
+# Stop docker dacă rulează
+sudo systemctl stop docker || true
+sudo systemctl stop containerd || true
 
-echo "=== STEP 1: Clean containerd conflicts (if any) ==="
-sudo apt-get remove -y containerd.io containerd docker docker-engine docker.io docker-ce || true
-sudo apt-get -f install -y || true
+# Curăță repo/chei vechi (safe)
+sudo rm -f /etc/apt/sources.list.d/docker.list /etc/apt/keyrings/docker.asc
 
-echo "=== STEP 2: Install Docker (docker.io from Ubuntu repo) ==="
-sudo apt-get update
-sudo apt-get install -y docker.io
+# Instalează dependențe
+sudo apt update
+sudo apt install -y ca-certificates curl gnupg
 
-echo "=== STEP 3: Test Docker with sudo ==="
-sudo docker run --rm hello-world
+# Creează dir keyrings
+sudo install -m 0755 -d /etc/apt/keyrings
 
-echo ""
-echo "Docker OK with sudo."
+# Descarcă GPG
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
 
-echo ""
-echo "=== STEP 4: Setup Solr container ==="
+# Adaugă repo
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo \"$VERSION_CODENAME\") stable" | \
+sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 
-# Create persistent Solr data directory
-mkdir -p ~/peviitor/solr
+# Update și instalează (apt e safe dacă există)
+sudo apt update
+sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
-echo "Pulling solr:latest..."
-sudo docker pull solr:latest
+# Start/enable service (safe)
+sudo systemctl enable --now docker
+sudo systemctl enable --now containerd
 
-echo "Stopping/removing old peviitor-solr (if any)..."
-sudo docker stop peviitor-solr || true
-sudo docker rm peviitor-solr || true
+# Grup user (safe, nu dă eroare dacă există)
+sudo groupadd -f docker
+sudo usermod -aG docker $USER
 
-echo "Starting new peviitor-solr container..."
-sudo docker run -d \
-  --name peviitor-solr \
-  -p 8983:8983 \
-  -v ~/peviitor/solr:/var/solr \
-  solr:latest
-
-sleep 10
-
-echo "=== STEP 5: Container status ==="
-sudo docker ps | grep peviitor-solr || echo "peviitor-solr not running"
-
-echo ""
-echo "=== COMPLETE ==="
-echo "Solr UI: http://localhost:8983/solr"
-echo "Use 'sudo docker ...' for all Docker commands."
+echo "=== Docker instalat! Rulează 'newgrp docker' sau logout/login ==="
+docker --version || echo "Eroare versiune"
+docker run hello-world || echo "Test hello-world eșuat, verifică logs"
