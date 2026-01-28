@@ -35,10 +35,10 @@ sudo systemctl start docker
 sudo systemctl enable docker
 
 # WSL-specific: Ensure docker group exists and add user
-sudo groupadd -f docker  # -f: force if exists
-sudo usermod -aG docker $USER
+sudo groupadd -f docker    # -f: force if exists
+sudo usermod -aG docker "$USER"
 
-# Activate group immediately
+# Activate group immediately (best-effort)
 newgrp docker 2>/dev/null || true
 
 # CRITICAL WSL FIX: Set docker.sock permissions for group access
@@ -47,8 +47,11 @@ sudo chmod 660 /var/run/docker.sock
 
 echo "Docker installed! Testing access..."
 
-# Test Docker
-docker run --rm --entrypoint echo hello-world > /dev/null || { echo "Docker failed - restart WSL: 'wsl --shutdown' from Windows PowerShell"; exit 1; }
+# Test Docker (with sudo, as requested)
+sudo docker run --rm --entrypoint echo hello-world > /dev/null || {
+  echo "Docker failed - restart WSL: 'wsl --shutdown' from Windows PowerShell"
+  exit 1
+}
 echo "Docker access OK!"
 
 echo ""
@@ -60,12 +63,12 @@ sudo docker run --rm -v ~/peviitor/solr:/mnt solr:latest chown -R 8983:8983 /mnt
 
 echo "Solr directory ready: ~/peviitor/solr"
 
-# Pull and run Solr
-docker pull solr:latest
-docker stop peviitor-solr || true
-docker rm peviitor-solr || true
+# Pull and run Solr (always via sudo)
+sudo docker pull solr:latest
+sudo docker stop peviitor-solr || true
+sudo docker rm peviitor-solr || true
 
-docker run -d \
+sudo docker run -d \
   --name peviitor-solr \
   -p 8983:8983 \
   -v ~/peviitor/solr:/var/solr \
@@ -74,10 +77,10 @@ docker run -d \
 sleep 10
 
 echo "Container status:"
-docker ps | grep peviitor-solr
+sudo docker ps | grep peviitor-solr || echo "peviitor-solr not running"
 
 echo ""
 echo "=== COMPLETE ==="
 echo "✓ Solr: http://localhost:8983/solr"
-echo "✓ Test: docker run hello-world"
+echo "✓ Test: sudo docker run hello-world"
 echo "WSL Tip: If issues persist, run 'wsl --shutdown' in Windows PowerShell, then reopen WSL."
