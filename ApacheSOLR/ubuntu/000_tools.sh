@@ -49,19 +49,19 @@ echo
 
 # 4. Stergem directorul ~/peviitor de pe host
 TARGET_DIR="$HOME/peviitor"
-
 echo "=== 4. Stergem directorul $TARGET_DIR ==="
 if [ -d "$TARGET_DIR" ]; then
-  read -p "Esti sigur ca vrei sa stergi TOT din $TARGET_DIR ? [yes/NO] " CONFIRM
+  read -p "Esti sigur ca vrei sa stergi TOT din $TARGET_DIR ? (include fisiere root) [yes/NO] " CONFIRM
   if [ "$CONFIRM" = "yes" ]; then
-    rm -rf "$TARGET_DIR"
-    echo "Sters: $TARGET_DIR"
+    sudo rm -rf "$TARGET_DIR"
+    echo "Sters (cu sudo): $TARGET_DIR"
   else
     echo "Abandonam stergerea $TARGET_DIR."
   fi
 else
   echo "Directorul $TARGET_DIR nu exista, nimic de sters."
 fi
+
 
 echo
 echo "================ CLEAN DONE ================"
