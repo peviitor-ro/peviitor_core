@@ -39,4 +39,3 @@ sudo usermod -aG docker $USER
 
 echo "=== Docker instalat! Rulează 'newgrp docker' sau logout/login ==="
 docker --version || echo "Eroare versiune"
-docker run hello-world || echo "Test hello-world eșuat, verifică logs"
