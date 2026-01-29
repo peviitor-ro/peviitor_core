@@ -1,11 +1,8 @@
 #!/usr/bin/env bash
 set -e
-
-SOLR_URL="http://localhost:8983/solr/job"
 SOLR_URL="http://localhost:8983/solr/job"
 
 echo "=== Verificam daca peviitor-solr este UP pentru core job ==="
-# asteptam max 30s sa porneasca
 for i in {1..30}; do
   if curl -s "$SOLR_URL/admin/ping" >/dev/null 2>&1; then
     echo "Solr job core este UP (incercare $i)."
@@ -19,6 +16,9 @@ if ! curl -s "$SOLR_URL/admin/ping" >/dev/null 2>&1; then
   echo "EROARE: Solr job core NU raspunde dupa 30s. Iesim."
   exit 1
 fi
+
+echo "Asteptam inca 25s pentru a termina loading-ul core-ului job..."
+sleep 25
 
 echo "=== Add fields (except url) ==="
 
