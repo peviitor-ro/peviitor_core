@@ -1,0 +1,19 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    image: peviitor-api:latest
+    container_name: peviitor-api
+    ports:
+      - "8081:80"
+    volumes:
+      - /home/sebi/peviitor/api:/var/www/html
+      - /home/sebi/peviitor/search-engine/dist:/var/www/frontend
+      - /home/sebi/peviitor/config/api.env:/var/www/html/api.env:ro
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    env_file:
+      - /home/sebi/peviitor/config/api.env
+    restart: unless-stopped
+

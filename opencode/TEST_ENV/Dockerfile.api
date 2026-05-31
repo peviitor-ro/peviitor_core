@@ -1,0 +1,11 @@
+FROM php:8.2-apache-bookworm
+
+RUN apt-get update && apt-get install -y libcurl4-openssl-dev && \
+    docker-php-ext-install curl && \
+    a2enmod rewrite && \
+    rm -rf /var/lib/apt/lists/*
+
+COPY apache-frontend.conf /etc/apache2/sites-available/frontend.conf
+RUN a2dissite 000-default && a2ensite frontend
+
+EXPOSE 80
