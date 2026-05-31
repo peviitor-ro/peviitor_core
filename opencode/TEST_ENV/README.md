@@ -20,39 +20,28 @@ Internet ──→ Reverse Proxy (nginx, extern)
     └────────────┘       └──────┘
 ```
 
-## Endpoint-uri
+## Toate linkurile
 
 ### Frontend
-| URL | Descriere |
-|---|---|
-| `https://test.peviitor.ro/` | Motorul de căutare (React, Vite) |
+- `https://test.peviitor.ro/` — motorul de căutare (React)
 
-### API (BFF — PHP)
+### API (BFF — PHP) — toate sub `https://test.peviitor.ro/`
+- `https://test.peviitor.ro/v1/search/?q=sofer` — căutare full-text joburi
+- `https://test.peviitor.ro/v1/jobs/` — listare toate joburile
+- `https://test.peviitor.ro/v1/total/` → `{"total":{"jobs":1,"companies":1}}` — total joburi și companii
+- `https://test.peviitor.ro/v0/total/` → `{"total":{"jobs":1,"companies":0}}` — total (v0, doar core `job`)
+- `https://test.peviitor.ro/v1/company/?cif=12477373` — detalii companie după CIF
+- `https://test.peviitor.ro/v1/companies/?rows=100` — listare companii
+- `https://test.peviitor.ro/v1/suggest/?q=sofer` — sugestii titluri joburi (fuzzy)
+- `https://test.peviitor.ro/v1/logo/` — logo-uri companii
+- `https://test.peviitor.ro/v1/random/` — job aleator
+- `https://test.peviitor.ro/v1/swagger.json` — specificația OpenAPI 3.0
+- `https://test.peviitor.ro/swagger-ui/` — interfață Swagger interactivă
 
-Toate endpoint-urile sunt sub `https://test.peviitor.ro/`:
-
-| Endpoint | Exemple răspuns | Descriere |
-|---|---|---|
-| `/v1/search/?q=sofer&city=Bucuresti` | `{"response":{"numFound":1,"docs":[...]}}` | Căutare full-text joburi |
-| `/v1/total/` | `{"total":{"jobs":1,"companies":1}}` | Total joburi și companii |
-| `/v0/total/` | `{"total":{"jobs":1,"companies":0}}` | Total (v0, doar `job` core) |
-| `/v1/jobs/` | `{"response":{"numFound":1,"docs":[...]}}` | Listare toate joburile |
-| `/v1/company/?cif=12477373` | `{"company":{"id":"12477373",...}}` | Detalii companie după CIF |
-| `/v1/companies/?rows=100` | `{"total":1,"companies":[...]}` | Listare companii |
-| `/v1/suggest/?q=sofer` | `{"suggestions":[{"term":"SOFER DE..."}]}` | Sugestii titluri joburi (fuzzy) |
-| `/v1/logo/` | `{"total":1,"logos":[{"company":"...","logo":"..."}]}` | Logo-uri companii |
-| `/v1/random/` | `{"url":"...","title":"..."}` | Job aleator |
-| `/v1/swagger.json` | OpenAPI 3.0 spec | Specificația Swagger |
-| `/swagger-ui/` | UI interactiv | Interfață Swagger pentru testare |
-
-### Solr
-| URL | Descriere |
-|---|---|
-| `https://testsolr.peviitor.ro/solr/` | Solr admin UI (Basic Auth) |
-| `https://testsolr.peviitor.ro/solr/job/select?q=*:*` | Core `job` |
-| `https://testsolr.peviitor.ro/solr/company/select?q=*:*` | Core `company` |
-
-Autentificare Solr: user `solr`.
+### Solr — toate sub `https://testsolr.peviitor.ro/solr/` (Basic Auth: user `solr`)
+- `https://testsolr.peviitor.ro/solr/` — admin UI
+- `https://testsolr.peviitor.ro/solr/job/select?q=*:*` — core `job`
+- `https://testsolr.peviitor.ro/solr/company/select?q=*:*` — core `company`
 
 ## Date
 
