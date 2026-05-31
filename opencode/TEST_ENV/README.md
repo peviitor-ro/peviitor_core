@@ -22,26 +22,23 @@ Internet ──→ Reverse Proxy (nginx, extern)
 
 ## Toate linkurile
 
-### Frontend
-- `https://test.peviitor.ro/` — motorul de căutare (React)
-
-### API (BFF — PHP) — toate sub `https://test.peviitor.ro/`
-- `https://test.peviitor.ro/v1/search/?q=sofer` — căutare full-text joburi
-- `https://test.peviitor.ro/v1/jobs/` — listare toate joburile
-- `https://test.peviitor.ro/v1/total/` → `{"total":{"jobs":1,"companies":1}}` — total joburi și companii
-- `https://test.peviitor.ro/v0/total/` → `{"total":{"jobs":1,"companies":0}}` — total (v0, doar core `job`)
-- `https://test.peviitor.ro/v1/company/?cif=12477373` — detalii companie după CIF
-- `https://test.peviitor.ro/v1/companies/?rows=100` — listare companii
-- `https://test.peviitor.ro/v1/suggest/?q=sofer` — sugestii titluri joburi (fuzzy)
-- `https://test.peviitor.ro/v1/logo/` — logo-uri companii
-- `https://test.peviitor.ro/v1/random/` — job aleator
-- `https://test.peviitor.ro/v1/swagger.json` — specificația OpenAPI 3.0
-- `https://test.peviitor.ro/swagger-ui/` — interfață Swagger interactivă
-
-### Solr — toate sub `https://testsolr.peviitor.ro/solr/` (Basic Auth: user `solr`)
-- `https://testsolr.peviitor.ro/solr/` — admin UI
-- `https://testsolr.peviitor.ro/solr/job/select?q=*:*` — core `job`
-- `https://testsolr.peviitor.ro/solr/company/select?q=*:*` — core `company`
+| Serviciu | URL |
+|---|---|
+| Frontend | `https://test.peviitor.ro/` |
+| API căutare | `https://test.peviitor.ro/v1/search/?q=sofer` |
+| API joburi | `https://test.peviitor.ro/v1/jobs/` |
+| API total (v1) | `https://test.peviitor.ro/v1/total/` → `{"total":{"jobs":1,"companies":1}}` |
+| API total (v0) | `https://test.peviitor.ro/v0/total/` → `{"total":{"jobs":1,"companies":0}}` |
+| API companie | `https://test.peviitor.ro/v1/company/?cif=12477373` |
+| API companii | `https://test.peviitor.ro/v1/companies/?rows=100` |
+| API suggest | `https://test.peviitor.ro/v1/suggest/?q=sofer` |
+| API logo | `https://test.peviitor.ro/v1/logo/` |
+| API random | `https://test.peviitor.ro/v1/random/` |
+| Swagger spec | `https://test.peviitor.ro/v1/swagger.json` |
+| Swagger UI | `https://test.peviitor.ro/swagger-ui/` |
+| Solr admin | `https://testsolr.peviitor.ro/solr/` (Basic Auth) |
+| Solr core job | `https://testsolr.peviitor.ro/solr/job/select?q=*:*` |
+| Solr core company | `https://testsolr.peviitor.ro/solr/company/select?q=*:*` |
 
 ## Date
 
