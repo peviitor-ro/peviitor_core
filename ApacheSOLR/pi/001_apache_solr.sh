@@ -20,8 +20,10 @@ echo "✓ solr:latest pulled"
 # Start with auto-create core 'job' on port 8983
 docker run -d \
   --name peviitor-solr \
+  --restart unless-stopped \
   -p 8983:8983 \
   -v ~/peviitor/solr:/var/solr \
+  -e SOLR_HEAP=2g \
   solr:latest solr-precreate job
 
 echo "⏳ Waiting 25s for Solr startup..."

@@ -15,8 +15,10 @@ docker pull solr:latest
 echo "Starting upgraded Solr container..."
 docker run -d \
   --name peviitor-solr \
+  --restart unless-stopped \
   -p 8983:8983 \
   -v ~/peviitor/solr:/var/solr \
+  -e SOLR_HEAP=2g \
   solr:latest
 
 echo ""

@@ -24,5 +24,7 @@ run_step "005_schema_jobs_pi.sh"           bash 005_schema_jobs_pi.sh
 run_step "006_recreate_company_core_pi.sh" bash 006_recreate_company_core_pi.sh
 run_step "007_schema_company_pi.sh"        bash 007_schema_company_pi.sh
 run_step "008_enable_solr_basic_auth_pi.sh" bash 008_enable_solr_basic_auth_pi.sh
+run_step "009_auto_update_solr.sh"         bash 009_auto_update_solr.sh
+run_step "010_setup_cron.sh"               bash 010_setup_cron.sh
 
 echo "=== RULARE install.sh TERMINATA (verifica mesajele de mai sus pentru erori). ==="

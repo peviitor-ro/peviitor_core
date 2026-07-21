@@ -16,7 +16,7 @@ docker exec peviitor-solr /opt/solr/bin/solr delete -c job || true
 sleep 2
 
 # Create fresh core
-docker exec peviitor-solr /opt/solr/bin/solr create_core -c job
+docker exec peviitor-solr /opt/solr/bin/solr create -c job
 
 echo ""
 echo "✅ JOB CORE RECREATED!"
