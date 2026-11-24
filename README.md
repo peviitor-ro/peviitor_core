@@ -43,7 +43,7 @@ Notes:
 
 | Field     | Type     | Required | Description |
 |-----------|----------|----------|-------------|
-| id        | string   | Yes      | CIF/CUI of the company (e.g. "12345678"). **id** = exact CIF/CUI 8 digits (no RO prefix). |
+| id        | string   | Yes      | CIF/CUI of the company (e.g. "12345678"). **id** = exact CIF/CUI 2-13 digits (no RO prefix). |
 | company   | string   | Yes      | Exact name for job matching. **company** = legal name from Trade Register, **DIACRITICS REQUIRED** (e.g. "Tehnologia Informației"). Use uppercase|
 | brand     | string   | No       | Commercial brand name (e.g. "ORANGE", "EPAM"). Used for display purposes. |
 | group     | string   | No       | Parent company group (e.g. "Orange Group", "EPAM Systems"). |
